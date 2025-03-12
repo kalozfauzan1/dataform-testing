@@ -1,16 +1,13 @@
--- This is an example SQLX file to help you learn the basics of Dataform.
--- Visit https://cloud.google.com/dataform/docs/sql-workflows for more information on how to configure your SQL workflow.
-
--- You can delete this file, then commit and push your changes to your repository when you are ready.
-
--- Config blocks allow you to configure, document, and test your data assets.
 config {
-  type: "view", // Creates a view in BigQuery. Try changing to "table" instead.
-  columns: {
-    test: "A description for the test column", // Column descriptions are pushed to BigQuery.
-  }
+  type: "table",
+  schema: "dataform",
+  name: "page_views_summary"
 }
 
--- The rest of a SQLX file contains your SELECT statement used to create the table.
-
-SELECT 2 as test
+SELECT
+  user_pseudo_id,
+  COUNT(*) AS total_page_views
+FROM `lively-antonym-388912.analytics_477969413.events_*`
+WHERE event_name = 'page_view'
+GROUP BY user_pseudo_id
+ORDER BY total_page_views DESC;
