@@ -1,0 +1,24 @@
+config {
+  type: "table",
+  schema: "dataform",
+  name: "page_views_summary"
+}
+
+SELECT
+  e.user_pseudo_id,
+
+  COUNT(*) AS total_page_views,
+  
+  d.device.category AS device_type,
+  d.device.operating_system AS os_name,
+  d.device.operating_system_version AS os_version,
+  d.device.web_info.browser AS browser_name
+FROM `lively-antonym-388912.analytics_477969413.events_*` e
+LEFT JOIN `lively-antonym-388912.analytics_477969413.events_*` d
+ON e.user_pseudo_id = d.user_pseudo_id
+AND e.event_bundle_sequence_id = d.event_bundle_sequence_id
+AND d.event_name = 'session_start'  -- Use session_start to get device info once per session
+WHERE e.event_name = 'page_view'
+GROUP BY user_pseudo_id, device_type, os_name, os_version, browser_name
+ORDER BY total_page_views DESC;
+

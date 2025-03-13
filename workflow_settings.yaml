@@ -1,5 +1,5 @@
 defaultProject: lively-antonym-388912
-defaultLocation: africa-south1
+defaultLocation: us
 defaultDataset: dataform
 defaultAssertionDataset: dataform_assertions
 dataformCoreVersion: 3.0.0
