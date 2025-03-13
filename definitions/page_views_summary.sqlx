@@ -6,7 +6,9 @@ config {
 
 SELECT
   e.user_pseudo_id,
+
   COUNT(*) AS total_page_views,
+  
   d.device.category AS device_type,
   d.device.operating_system AS os_name,
   d.device.operating_system_version AS os_version,
